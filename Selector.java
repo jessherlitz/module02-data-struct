@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -113,21 +114,20 @@ public final class Selector {
          throw new NoSuchElementException();
       }
    
-      Iterator<T> iterator = coll.iterator();
-      T kthMin = iterator.next();
+      List<T> sortedList = new ArrayList<>(coll);
+      Collections.sort(sortedList, comp);
    
-      for (int i = 1; i < k; i++) {
-         if (!iterator.hasNext()) {
-            throw new NoSuchElementException();
-         }
-      
-         T current = iterator.next();
-         if (comp.compare(current, kthMin) < 0) {
-            kthMin = current;
+      List<T> newList = new ArrayList<>();
+      newList.add(sortedList.get(0)); 
+   
+      for (int i = 1; i < sortedList.size(); i++) {
+         if (comp.compare(sortedList.get(i), sortedList.get(i - 1)) != 0) {
+            newList.add(sortedList.get(i));
          }
       }
    
-      return kthMin;
+      return newList.get(k - 1); 
+   
    }
 
 
@@ -155,21 +155,19 @@ public final class Selector {
          throw new NoSuchElementException();
       }
    
-      Iterator<T> iterator = coll.iterator();
-      T kthMax = iterator.next();
+      List<T> sortedList = new ArrayList<>(coll);
+      Collections.sort(sortedList, comp);
    
-      for (int i = 1; i < k; i++) {
-         if (!iterator.hasNext()) {
-            throw new NoSuchElementException();
-         }
-      
-         T current = iterator.next();
-         if (comp.compare(current, kthMax) > 0) {
-            kthMax = current;
+      List<T> newList = new ArrayList<>();
+      newList.add(sortedList.get(sortedList.size() - 1)); 
+   
+      for (int i = sortedList.size() - 2; i >= 0; i--) {
+         if (comp.compare(sortedList.get(i), sortedList.get(i + 1)) != 0) {
+            newList.add(sortedList.get(i));
          }
       }
    
-      return kthMax;
+      return newList.get(k - 1);
    }
 
 
