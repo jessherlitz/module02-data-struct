@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -149,6 +150,25 @@ public class SelectorTest {
    
       int expected = 2;
       int k = 1;
+      int actual = Selector.kmin(a, k, comp);
+      assertEquals(expected, actual);
+   }
+   
+     
+   @Test (expected = NoSuchElementException.class)
+   public void testKMinVoca() {
+      List<Integer> a = new ArrayList<Integer>();
+      Comparator<Integer> comp = Comparator.naturalOrder();
+      a.add(-4);
+      a.add(-4);
+      a.add(-4);
+      a.add(-4);
+      a.add(-4);
+      a.add(-4);
+      a.add(-4);
+   
+      Exception expected = new NoSuchElementException();
+      int k = 2;
       int actual = Selector.kmin(a, k, comp);
       assertEquals(expected, actual);
    }
@@ -344,7 +364,7 @@ public class SelectorTest {
       a.add(3);
       a.add(3);
       a.add(4);
-
+   
       int low = 3;
       int high = 7;
       List<Integer> expected = new ArrayList<Integer>();

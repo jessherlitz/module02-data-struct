@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -115,7 +113,7 @@ public final class Selector {
       }
    
       List<T> sortedList = new ArrayList<>(coll);
-      Collections.sort(sortedList, comp);
+      java.util.Collections.sort(sortedList, comp);
    
       List<T> newList = new ArrayList<>();
       newList.add(sortedList.get(0)); 
@@ -124,6 +122,10 @@ public final class Selector {
          if (comp.compare(sortedList.get(i), sortedList.get(i - 1)) != 0) {
             newList.add(sortedList.get(i));
          }
+      }
+
+      if (k > newList.size()) {
+         throw new NoSuchElementException();
       }
    
       return newList.get(k - 1); 
@@ -156,7 +158,7 @@ public final class Selector {
       }
    
       List<T> sortedList = new ArrayList<>(coll);
-      Collections.sort(sortedList, comp);
+      java.util.Collections.sort(sortedList, comp);
    
       List<T> newList = new ArrayList<>();
       newList.add(sortedList.get(sortedList.size() - 1)); 
@@ -165,6 +167,10 @@ public final class Selector {
          if (comp.compare(sortedList.get(i), sortedList.get(i + 1)) != 0) {
             newList.add(sortedList.get(i));
          }
+      }
+
+      if (k > newList.size()) {
+         throw new NoSuchElementException();
       }
    
       return newList.get(k - 1);
